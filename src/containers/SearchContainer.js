@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { searchNews } from '../actions/newsActions';
 import Search from '../components/Search';
 import { searchNewsSelector } from '../selectors/newsSelectors';
+import { addBookmark } from '../actions/bookmarkActions';
 
 const mapStateToProps = state => ({
     filteredNews: searchNewsSelector(state)
@@ -10,7 +11,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        searchNews
+        searchNews,
+        addBookmark
     }, dispatch)
 );
 

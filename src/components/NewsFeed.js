@@ -9,11 +9,14 @@ import {
     TouchableOpacity,
     WebView,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
+    NetInfo,
+    Linking
 } from 'react-native';
 import * as globalStyles from '../styles/global';
 import NewsItem from './NewsItem';
-import SmallText from './SmallText'
+import SmallText from './SmallText';
+import AppText from './AppText';
 
 export default class NewsFeed extends Component {
 
@@ -26,7 +29,8 @@ export default class NewsFeed extends Component {
             dataSource: this.ds.cloneWithRows(props.news),
             initialLoading: true,
             modalVisible: false,
-            refreshing: false
+            refreshing: false,
+            connected: true
         };
         console.log(this.state.dataSource);
         this.renderModal = this.renderModal.bind(this);
@@ -34,10 +38,25 @@ export default class NewsFeed extends Component {
         this.onModalClose = this.onModalClose.bind(this);
         this.renderRow = this.renderRow.bind(this);
         this.refresh = this.refresh.bind(this);
+        this.handleConnectivityChange = this.handleConnectivityChange.bind(this);
+    }
+
+    handleConnectivityChange(isConnected){
+        this.setState({
+            connected: isConnected
+        });
+        if(isConnected){
+            this.refresh;
+        }
     }
 
     componentWillMount(){
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange)
         this.refresh();
+    }
+
+    componentWillUnmount(){
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
     }
 
     componentWillReceiveProps(nextProps){
@@ -61,12 +80,23 @@ export default class NewsFeed extends Component {
             onRequestClose={this.onModalClose}
             >
                 <View style={styles.modalContent}>
-                    <TouchableOpacity
-                        onPress={this.onModalClose}
-                        style={styles.closeButton}
-                    >
-                        <SmallText>Close</SmallText>
-                    </TouchableOpacity>
+                    <View style ={styles.modalButtons}>
+                        <TouchableOpacity
+                            onPress={this.onModalClose}
+                            style={styles.closeButton}
+                        >
+                            <SmallText style={{ color: 'white' }} >Close</SmallText>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress = { () => Linking.openURL(this.state.modalUrl)}
+                            >
+                            <SmallText style= {{color: 'white'}}>Open in Browser</SmallText>    
+                        </TouchableOpacity>
+                    </View>
+
+
+
                     <WebView 
                     scalesPageToFit
                     source = {{ uri: this.state.modalUrl }}
@@ -102,6 +132,16 @@ export default class NewsFeed extends Component {
     }
     
     render() {
+
+        if(!this.state.connected) {
+            console.log("NOT CONNECTED!!!");
+            return (
+                <View style={{flex:1}}>
+                    <AppText>No Connection!</AppText>
+                </View>
+            );
+        }
+
         const {
             listStyles = globalStyles.COMMON_STYLES.pageContainer,
             showLoadingSpinner
@@ -173,5 +213,10 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         flexDirection: 'row'
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        justifyContent: 'space-between'
     }
 });

@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {loadNews} from '../actions/newsActions';
 import NewsFeed from '../components/NewsFeed';
 import { allNewsSelector } from '../selectors/newsSelectors';
+import { addBookmark } from '../actions/bookmarkActions';
 
 const mapStateToProps = state => ({
     news: allNewsSelector(state)
@@ -10,7 +11,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        loadNews
+        loadNews,
+        addBookmark
     }, dispatch)
 );
 
