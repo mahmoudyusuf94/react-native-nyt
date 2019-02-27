@@ -10,9 +10,19 @@ const AppNavigator = createStackNavigator(
     Intro: IntroScreen,
     Feed: HomeScreen
     }, {
-        initialRouteName: 'Intro'
+        initialRouteName: 'Intro',
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        }
     }
 );
+
 
 const AppContainer = createAppContainer(AppNavigator);
 const store = createStore();
