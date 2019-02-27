@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ScrollableTabView, { DefaultTabBar} from 'react-native-scrollable-tab-view';
 import NewsFeedContainer from '../containers/NewsFeedContainer';
 import SearchContainer from '../containers/SearchContainer';
-import {NavigationEvents} from 'react-navigation';
 export default class HomeScreen extends Component {
 
     static navigationOptions = {
