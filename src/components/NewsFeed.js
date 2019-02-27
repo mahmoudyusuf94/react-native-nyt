@@ -10,7 +10,8 @@ import {
     WebView,
     RefreshControl,
     ActivityIndicator,
-    NetInfo
+    NetInfo,
+    Linking
 } from 'react-native';
 import * as globalStyles from '../styles/global';
 import NewsItem from './NewsItem';
@@ -79,12 +80,23 @@ export default class NewsFeed extends Component {
             onRequestClose={this.onModalClose}
             >
                 <View style={styles.modalContent}>
-                    <TouchableOpacity
-                        onPress={this.onModalClose}
-                        style={styles.closeButton}
-                    >
-                        <SmallText>Close</SmallText>
-                    </TouchableOpacity>
+                    <View style ={styles.modalButtons}>
+                        <TouchableOpacity
+                            onPress={this.onModalClose}
+                            style={styles.closeButton}
+                        >
+                            <SmallText style={{ color: 'white' }} >Close</SmallText>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress = { () => Linking.openURL(this.state.modalUrl)}
+                            >
+                            <SmallText style= {{color: 'white'}}>Open in Browser</SmallText>    
+                        </TouchableOpacity>
+                    </View>
+
+
+
                     <WebView 
                     scalesPageToFit
                     source = {{ uri: this.state.modalUrl }}
@@ -201,5 +213,10 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
         flexDirection: 'row'
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        justifyContent: 'space-between'
     }
 });
