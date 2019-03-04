@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "moment": "^2.24.0",
-    "react": "16.6.3",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-native": "0.58.5",
     "react-native-gesture-handler": "^1.0.16",
     "react-native-scrollable-tab-view": "^0.10.0",
@@ -20,13 +21,29 @@
     "reselect": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "24.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "enzyme-to-json": "^3.3.5",
+    "flow-bin": "^0.93.0",
     "jest": "24.1.0",
     "metro-react-native-babel-preset": "0.52.0",
     "react-test-renderer": "16.6.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|@react-navigation|react-navigation|react-navigation-redux-helpers)"
+    ],
+    "setupFiles": [
+      "./jestSetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }

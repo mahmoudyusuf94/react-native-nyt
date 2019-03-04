@@ -11,7 +11,7 @@ import {
     RefreshControl,
     ActivityIndicator,
     NetInfo,
-    Linking
+    Linking,
 } from 'react-native';
 import * as globalStyles from '../styles/global';
 import NewsItem from './NewsItem';
