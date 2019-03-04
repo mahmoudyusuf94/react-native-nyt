@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      },
+      "storeState": Object {
+        "bookmarks": Array [],
+        "news": Array [],
+        "searchTerm": "",
+      },
+    }
+  }
+>
+  <NavigationContainer />
+</ContextProvider>
+`;
